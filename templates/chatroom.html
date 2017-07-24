@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title> Chat Room </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="/static/jquery-3.2.1.min.js"></script>
+    <script type="text/css">
+    body {
+    background-color: aqua;
+    }
+    </script>
+
+
+</head>
+<body>
+<script type = 'text/javascript'>
+$(document).ready(function(){
+ var socket = io.connect('http://127.0.0.1:5000');
+
+ socket.on('connect', function(){
+
+  socket.send('user has connected');
+
+   });
+  socket.on('message', function(msg){
+
+   $("#messages").append('<li>' +msg+ '</li>');
+   console.log('Received Message');
+   });
+
+   $('#sendbutton').on('click', function(){
+   socket.send($('#myMessage').val());
+   $('#myMessage').val('')
+   }
+
+});
+</script>
+<ul id="messages"></ul>
+<input type="text" id="myMessage">
+<button id="sendbutton">SEND</button>
+
+
+</body>
+</html>
